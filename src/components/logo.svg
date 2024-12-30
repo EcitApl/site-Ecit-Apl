@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Círculo externo -->
+  <circle cx="250" cy="250" r="240" fill="white" stroke="black" stroke-width="2"/>
+  
+  <!-- Texto circular superior -->
+  <path id="textPath" d="M250,30 A220,220 0 0,1 470,250" fill="none"/>
+  <text>
+    <textPath href="#textPath" startOffset="10%" font-family="Arial" font-size="20">
+      SOLÂNEA PB - DEC. 5147 DE 07 – 11 - 1970
+    </textPath>
+  </path>
+  
+  <!-- Texto circular inferior -->
+  <path id="textPath2" d="M30,250 A220,220 0 0,0 250,470" fill="none"/>
+  <text>
+    <textPath href="#textPath2" startOffset="15%" font-family="Arial" font-size="24" font-weight="bold">
+      ALFREDO PESSOA DE LIMA
+    </textPath>
+  </path>
+
+  <!-- Divisões internas -->
+  <path d="M250,50 L250,450 M50,250 L450,250" stroke="black" stroke-width="2"/>
+  
+  <!-- Letras nos quadrantes -->
+  <text x="180" y="180" font-size="80" font-family="Arial" fill="#E75480">E</text>
+  <text x="320" y="180" font-size="80" font-family="Arial" fill="#7FCDCD">C</text>
+  <text x="180" y="350" font-size="80" font-family="Arial" fill="#4169E1">I</text>
+  <text x="320" y="350" font-size="80" font-family="Arial" fill="#F4C430">T</text>
+  
+  <!-- Chapéu de formatura -->
+  <path d="M400,100 L450,50 L420,80 L400,100 Z" fill="black"/>
+</svg>
