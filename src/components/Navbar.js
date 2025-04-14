@@ -68,7 +68,7 @@ function Navbar() {
   );
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ bgcolor: '#1a237e' }}>
       <Container>
         <Toolbar sx={{ padding: { xs: '0 8px', sm: '0 16px' } }}>
           <Typography 

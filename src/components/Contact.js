@@ -15,23 +15,22 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Contact = () => {
   return (
-    <Container>
-      <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4, mb: 4 }}>
+    <Container sx={{ backgroundColor: '#1a237e', color: 'white', py: 4, borderRadius: 2 }}>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4, mb: 4, color: 'white' }}>
         Contato
       </Typography>
 
       <Grid container spacing={4}>
-        {/* Informações de Contato */}
         <Grid item xs={12} md={4}>
-          <Card sx={{ height: '100%' }}>
+          <Card sx={{ height: '100%', backgroundColor: '#283593', color: 'white' }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
                 Informações de Contato
               </Typography>
 
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <LocationOnIcon color="primary" sx={{ mr: 2 }} />
-                <Typography>
+                <LocationOnIcon sx={{ mr: 2, color: '#90caf9' }} />
+                <Typography color="white">
                   R. Luiz Ferreira de Melo<br />
                   Centro<br />
                   Solânea - PB
@@ -39,22 +38,22 @@ const Contact = () => {
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <PhoneIcon color="primary" sx={{ mr: 2 }} />
-                <Typography>
+                <PhoneIcon sx={{ mr: 2, color: '#90caf9' }} />
+                <Typography color="white">
                   (83) 3531-3908
                 </Typography>
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <EmailIcon color="primary" sx={{ mr: 2 }} />
-                <Typography>
+                <EmailIcon sx={{ mr: 2, color: '#90caf9' }} />
+                <Typography color="white">
                   contato@ecitapl.com.br
                 </Typography>
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <AccessTimeIcon color="primary" sx={{ mr: 2 }} />
-                <Typography>
+                <AccessTimeIcon sx={{ mr: 2, color: '#90caf9' }} />
+                <Typography color="white">
                   Segunda a Sexta: 7:30h às 17h
                 </Typography>
               </Box>
@@ -62,10 +61,9 @@ const Contact = () => {
           </Card>
         </Grid>
 
-        {/* Mapa incorporado */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
+          <Paper sx={{ p: 3, height: '100%', backgroundColor: '#283593' }}>
+            <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
               Nossa Localização
             </Typography>
             <Box sx={{ width: '100%', height: { xs: '250px', sm: '300px' }, position: 'relative' }}>

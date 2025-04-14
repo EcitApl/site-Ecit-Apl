@@ -12,7 +12,58 @@ import {
   CircularProgress,
   Alert,
 } from '@mui/material';
-import { fetchLectures } from '../services/api';
+
+// Sample lecture data
+const sampleLectures = [
+  {
+    id: 1,
+    titulo: "Tecnologias Educacionais Modernas",
+    palestrante: "Dra. Maria Silva",
+    data: "2025-04-15",
+    hora_inicio: "14:00",
+    hora_fim: "16:00",
+    local: "Auditório Principal",
+    descricao: "Uma exploração das mais recentes tecnologias e métodos pedagógicos que estão revolucionando a educação. Discutiremos ferramentas digitais, aprendizado híbrido e personalização do ensino.",
+    imagem: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
+    vagas_disponiveis: 50
+  },
+  {
+    id: 2,
+    titulo: "Inclusão na Educação: Desafios e Soluções",
+    palestrante: "Prof. João Santos",
+    data: "2025-04-20",
+    hora_inicio: "09:00",
+    hora_fim: "11:30",
+    local: "Sala de Conferências",
+    descricao: "Palestra focada em estratégias práticas para promover a inclusão em sala de aula, abordando diferentes necessidades de aprendizagem e adaptações curriculares.",
+    imagem: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800",
+    vagas_disponiveis: 35
+  },
+  {
+    id: 3,
+    titulo: "Avaliação por Competências",
+    palestrante: "Me. Ana Oliveira",
+    data: "2025-05-10",
+    hora_inicio: "15:00",
+    hora_fim: "17:00",
+    local: "Auditório 2",
+    descricao: "Como implementar um sistema de avaliação baseado em competências, alinhado com as diretrizes da BNCC e as demandas do século XXI.",
+    imagem: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
+    vagas_disponiveis: 40
+  },
+  {
+    id: 4,
+    titulo: "Saúde Mental na Escola",
+    palestrante: "Dr. Carlos Mendes",
+    data: "2025-05-25",
+    hora_inicio: "13:30",
+    hora_fim: "15:30",
+    local: "Auditório Principal",
+    descricao: "Discussão sobre o papel da escola na promoção da saúde mental dos alunos, identificação de sinais de alerta e estratégias de apoio.",
+    imagem: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800",
+    vagas_disponiveis: 60
+  }
+];
 
 const Lectures = () => {
   const [lectures, setLectures] = useState([]);
@@ -22,14 +73,7 @@ const Lectures = () => {
   // Helper function to format date
   const formatDate = (dateString) => {
     try {
-      const date = new Date(dateString + 'T00:00:00');
-      if (isNaN(date.getTime())) {
-        const parts = dateString.split('-');
-        if (parts.length === 3) {
-          return `${parts[2]}/${parts[1]}/${parts[0]}`;
-        }
-        return 'Data inválida';
-      }
+      const date = new Date(dateString);
       return date.toLocaleDateString('pt-BR', {
         day: '2-digit',
         month: '2-digit',
@@ -42,18 +86,13 @@ const Lectures = () => {
   };
 
   useEffect(() => {
+    // Simulating API call with sample data
     const loadLectures = async () => {
       try {
         setLoading(true);
-        const data = await fetchLectures();
-        console.log('Lectures data:', data); // Debug log
-        if (data && Array.isArray(data.results)) {
-          setLectures(data.results);
-        } else if (Array.isArray(data)) {
-          setLectures(data);
-        } else {
-          setLectures([]);
-        }
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setLectures(sampleLectures);
         setError(null);
       } catch (err) {
         setError('Não foi possível carregar as palestras. Por favor, tente novamente mais tarde.');
@@ -93,7 +132,11 @@ const Lectures = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 4 }}>
-        Palestras
+        Palestras e Eventos Educacionais
+      </Typography>
+      
+      <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 6 }}>
+        Participe de nossas palestras e mantenha-se atualizado com as últimas tendências em educação
       </Typography>
 
       <Grid container spacing={4}>
@@ -104,9 +147,10 @@ const Lectures = () => {
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                transition: 'transform 0.2s',
+                transition: 'transform 0.2s, box-shadow 0.2s',
                 '&:hover': {
-                  transform: 'scale(1.02)',
+                  transform: 'translateY(-4px)',
+                  boxShadow: (theme) => theme.shadows[8],
                 },
               }}
             >
@@ -115,36 +159,28 @@ const Lectures = () => {
                   component="img"
                   height="200"
                   image={lecture.imagem}
-                  alt={lecture.titulo || lecture.nome}
+                  alt={lecture.titulo}
                   sx={{ objectFit: 'cover' }}
                 />
               )}
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h5" component="h2" gutterBottom>
-                  {lecture.titulo || lecture.nome}
+                  {lecture.titulo}
                 </Typography>
-                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                  Palestrante: {lecture.palestrante || lecture.speaker}
+                <Typography variant="subtitle1" color="primary" gutterBottom>
+                  {lecture.palestrante}
                 </Typography>
-                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                  Data: {formatDate(lecture.data || lecture.date)}
-                </Typography>
-                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                  Horário: {lecture.hora_inicio ? 
-                    new Date(`2000-01-01T${lecture.hora_inicio}`).toLocaleTimeString('pt-BR', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: false
-                    }) : lecture.horario || 'Horário não definido'}
-                  {lecture.hora_fim && ` - ${new Date(`2000-01-01T${lecture.hora_fim}`).toLocaleTimeString('pt-BR', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                  })}`}
-                </Typography>
-                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                  Local: {lecture.local || lecture.location || 'Local não definido'}
-                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Data:</strong> {formatDate(lecture.data)}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Horário:</strong> {lecture.hora_inicio} - {lecture.hora_fim}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Local:</strong> {lecture.local}
+                  </Typography>
+                </Box>
                 <Typography variant="body2" color="text.secondary" sx={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
@@ -152,27 +188,24 @@ const Lectures = () => {
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: 'vertical',
                 }}>
-                  {lecture.descricao || lecture.description}
+                  {lecture.descricao}
                 </Typography>
               </CardContent>
-              {(lecture.vagas_disponiveis !== undefined || lecture.vagas !== undefined) && (
-                <Box sx={{ px: 2, pb: 1 }}>
-                  <Typography variant="subtitle2" color={(lecture.vagas_disponiveis || lecture.vagas) > 0 ? 'success.main' : 'error.main'}>
-                    {(lecture.vagas_disponiveis || lecture.vagas) > 0 
-                      ? `Vagas disponíveis: ${lecture.vagas_disponiveis || lecture.vagas}`
-                      : 'Vagas esgotadas'}
-                  </Typography>
-                </Box>
-              )}
-              <CardActions>
+              <Box sx={{ p: 2, bgcolor: 'background.paper' }}>
+                <Typography variant="subtitle2" color={lecture.vagas_disponiveis > 0 ? 'success.main' : 'error.main'} gutterBottom>
+                  {lecture.vagas_disponiveis > 0 
+                    ? `${lecture.vagas_disponiveis} vagas disponíveis`
+                    : 'Vagas esgotadas'}
+                </Typography>
                 <Button
-                  size="small"
-                  disabled={(lecture.vagas_disponiveis || lecture.vagas) === 0}
-                  sx={{ ml: 1, mb: 1 }}
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  disabled={lecture.vagas_disponiveis === 0}
                 >
-                  {(lecture.vagas_disponiveis || lecture.vagas) > 0 ? 'Inscrever-se' : 'Lista de Espera'}
+                  {lecture.vagas_disponiveis > 0 ? 'Inscrever-se' : 'Lista de Espera'}
                 </Button>
-              </CardActions>
+              </Box>
             </Card>
           </Grid>
         ))}

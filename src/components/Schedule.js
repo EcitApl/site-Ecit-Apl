@@ -22,20 +22,36 @@ const fetchScheduleData = async () => {
   const subjects = [
     'Matemática',
     'Português',
-    'História',
+    'Intervalo',
     'Geografia',
-    'Ciências'
+    'Ciências',
+    'Física',
+    'História',
+    'Educação Física',
+    'Artes',
+    'Inglês',
+    'Química',
+    'Biologia',
+    'Almoço'
   ];
   
   const times = [
     '07:30',
     '08:20',
     '09:10',
+    '09:30',
     '10:20',
-    '11:10'
+    '11:10',
+    '12:00',
+    '13:20',
+    '14:10',
+    '15:00',
+    '15:20',
+    '16:10',
+    '17:00'
   ];
   
-  const classes = ['Turma A', 'Turma B', 'Turma C'];
+  const classes = ['Turma 8A', 'Turma 9A', 'Turma 9B', 'TURMA 1A', 'TURMA 1B', 'TURMA 1C', 'TURMA 2A', 'TURMA 2B', 'TURMA 3A', 'TURMA 3B'];
   
   const mockData = {};
   
@@ -48,10 +64,19 @@ const fetchScheduleData = async () => {
       'Sexta-feira': []
     };
     days.forEach(day => {
-      mockData[className][day] = times.map(time => ({
-        time,
-        subject: subjects[Math.floor(Math.random() * subjects.length)]
-      }));
+      mockData[className][day] = times.map((time) => {
+        // Define fixed breaks
+        if (time === '09:10') return { time, subject: 'Intervalo' };
+        if (time === '12:00') return { time, subject: 'Almoço' };
+        if (time === '15:10') return { time, subject: 'Intervalo' };
+        
+        // Filter out breaks from random subject selection
+        const availableSubjects = subjects.filter(s => s !== 'Intervalo' && s !== 'Almoço');
+        return {
+          time,
+          subject: availableSubjects[Math.floor(Math.random() * availableSubjects.length)]
+        };
+      });
     });
   });
   
@@ -175,49 +200,175 @@ const Schedule = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 4 }}>
-        Horários de Aula
-      </Typography>
+      <Box sx={{ 
+        backgroundColor: 'background.paper',
+        borderRadius: 2,
+        p: 4,
+        boxShadow: 1
+      }}>
+        <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Typography 
+            variant="h4" 
+            component="h1" 
+            gutterBottom 
+            sx={{ 
+              color: 'primary.main',
+              fontWeight: 'bold'
+            }}
+          >
+            Horários de Aula
+          </Typography>
+          <Typography 
+            variant="subtitle1" 
+            color="text.secondary"
+            sx={{ maxWidth: 600, mx: 'auto', mb: 3 }}
+          >
+            Consulte os horários das aulas para cada turma. Os intervalos e horários de almoço estão destacados para melhor visualização.
+          </Typography>
+        </Box>
 
-      <Box sx={{ minWidth: 120, mb: 3 }}>
-        <FormControl fullWidth size="small">
-          <InputLabel>Turma</InputLabel>
-          <Select value={selectedClass} label="Turma" onChange={handleClassChange}>
-            {Object.keys(scheduleData).map((className) => (
-              <MenuItem key={className} value={className}>
-                {className}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-
-      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-        <Table stickyHeader size="small" aria-label="horário escolar">
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'primary.main', color: 'white' }}>Horário</TableCell>
-              {days.map((day) => (
-                <TableCell key={day} sx={{ fontWeight: 'bold', width: '17%', bgcolor: 'primary.main', color: 'white' }}>
-                  {day}
-                </TableCell>
+        <Box sx={{ 
+          minWidth: 120, 
+          mb: 4,
+          display: 'flex', 
+          gap: 2,
+          flexDirection: { xs: 'column', sm: 'row' },
+          maxWidth: { sm: '600px' },
+          mx: 'auto'
+        }}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Turma</InputLabel>
+            <Select 
+              value={selectedClass} 
+              label="Turma" 
+              onChange={handleClassChange}
+              sx={{ 
+                bgcolor: 'background.paper',
+                '& .MuiSelect-select': {
+                  fontWeight: 'medium'
+                }
+              }}
+            >
+              {Object.keys(scheduleData).map((className) => (
+                <MenuItem key={className} value={className}>
+                  {className}
+                </MenuItem>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {timeSlots.map((timeSlot) => (
-              <TableRow key={timeSlot} sx={{ '&:nth-of-type(odd)': { bgcolor: 'action.hover' } }}>
-                <TableCell sx={{ fontSize: '0.875rem' }}>{timeSlot}</TableCell>
-                {days.map((day) => (
-                  <TableCell key={day} sx={{ fontSize: '0.875rem' }}>
-                    {findSubjectAtTime(day, timeSlot)}
-                  </TableCell>
-                ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth size="small">
+            <InputLabel>Dia</InputLabel>
+            <Select 
+              value={selectedDay} 
+              label="Dia" 
+              onChange={handleDayChange}
+              sx={{ 
+                bgcolor: 'background.paper',
+                '& .MuiSelect-select': {
+                  fontWeight: 'medium'
+                }
+              }}
+            >
+              {days.map((day) => (
+                <MenuItem key={day} value={day}>
+                  {day}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <TableContainer 
+          component={Paper} 
+          sx={{ 
+            maxHeight: 'calc(100vh - 300px)',
+            minHeight: 400,
+            maxWidth: 800,
+            mx: 'auto',
+            boxShadow: 2,
+            borderRadius: 1,
+            overflow: 'auto',
+            '& .MuiTableCell-root': {
+              py: 1.5,
+              px: 2,
+              borderBottom: '1px solid',
+              borderColor: 'divider'
+            },
+            '& .break-row': {
+              bgcolor: 'grey.50',
+              '& .MuiTableCell-root': {
+                color: 'primary.main',
+                fontWeight: 'medium'
+              }
+            },
+            '& .lunch-row': {
+              bgcolor: 'primary.50',
+              '& .MuiTableCell-root': {
+                color: 'primary.dark',
+                fontWeight: 'medium'
+              }
+            }
+          }}
+        >
+          <Table stickyHeader size="small" aria-label="horário escolar">
+            <TableHead>
+              <TableRow>
+                <TableCell 
+                  sx={{ 
+                    fontWeight: 'bold', 
+                    width: '30%',
+                    bgcolor: 'primary.main',
+                    color: 'primary.contrastText'
+                  }}
+                >
+                  Horário
+                </TableCell>
+                <TableCell 
+                  sx={{ 
+                    fontWeight: 'bold',
+                    bgcolor: 'primary.main',
+                    color: 'primary.contrastText'
+                  }}
+                >
+                  Disciplina
+                </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {timeSlots.map((timeSlot) => {
+                const subject = findSubjectAtTime(selectedDay, timeSlot);
+                const isBreak = subject === 'Intervalo';
+                const isLunch = subject === 'Almoço';
+                return (
+                  <TableRow 
+                    key={timeSlot}
+                    className={isBreak ? 'break-row' : isLunch ? 'lunch-row' : ''}
+                    sx={{
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                      }
+                    }}
+                  >
+                    <TableCell 
+                      component="th" 
+                      scope="row" 
+                      sx={{ 
+                        fontWeight: 'medium',
+                        borderLeft: '4px solid',
+                        borderLeftColor: isBreak ? 'primary.light' : isLunch ? 'primary.main' : 'transparent'
+                      }}
+                    >
+                      {timeSlot}
+                    </TableCell>
+                    <TableCell>{subject}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Container>
   );
 };

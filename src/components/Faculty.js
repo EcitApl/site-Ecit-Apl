@@ -22,6 +22,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import CloseIcon from '@mui/icons-material/Close';
 import { fetchFaculty } from '../services/api';
 import defaultProfileImage from '../assets/default-profile.png';
+import luanImage from '../assets/luan.jpeg';
+import rangelImage from '../assets/rangel.jpeg';
 
 const Faculty = () => {
   const [faculty, setFaculty] = useState([]);
@@ -29,28 +31,206 @@ const Faculty = () => {
   const [error, setError] = useState(null);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
 
+  
   useEffect(() => {
     const loadFaculty = async () => {
       try {
         setLoading(true);
-        const data = await fetchFaculty();
-        console.log('Faculty data:', data);
+        // Static data for seven professors
         
-        let processedData;
-        if (data && Array.isArray(data.results)) {
-          processedData = data.results;
-        } else if (Array.isArray(data)) {
-          processedData = data;
-        } else {
-          processedData = [];
-        }
+        const staticFaculty = [
+          {
+            id: 1,
+            nome: 'Luan Soares',
+            disciplina: 'Espanhol',
+            email: 'maria.silva@escola.com',
+            formacao: 'Licenciatura em Espanhol',
+            descricao: 'Especialista em Álgebra e Geometria com 10 anos de experiência no ensino fundamental e médio.',
+            foto: luanImage
+          },
+          {
+            id: 2,
+            nome: 'Rangel Andrade',
+            disciplina: 'Informática',
+            email: 'joao.santos@escola.com',
+            formacao: 'Licenciatura em Computação e Informática',
+            descricao: 'Professor dedicado à literatura brasileira e gramática, com experiência em preparação para vestibular.',
+            foto: rangelImage
+          },
+          {
+            id: 3,
+            nome: 'Suênia Marques',
+            disciplina: 'Português',
+            email: 'ana.oliveira@escola.com',
+            formacao: 'Licenciatura em Português',
+            descricao: 'Especialista em ciências naturais com foco em experimentos práticos e educação ambiental.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 4,
+            nome: 'Ana Kaline Delgado',
+            disciplina: 'História',
+            email: 'carlos.ferreira@escola.com',
+            formacao: 'Licenciatura em Português',
+            descricao: 'Professor especializado em História do Brasil e História Mundial Contemporânea.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 5,
+            nome: 'Virginia',
+            disciplina: 'Português',
+            email: 'patricia.lima@escola.com',
+            formacao: 'Licenciatura em Português',
+            descricao: 'Professora com experiência em cartografia e geografia humana.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 6,
+            nome: 'Osmar Sampaio',
+            disciplina: 'Educação Física',
+            email: 'roberto.costa@escola.com',
+            formacao: 'Licenciatura em Educação Física',
+            descricao: 'Professor especializado em desenvolvimento motor e esportes coletivos.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 7,
+            nome: 'Hilza Constantino',
+            disciplina: 'Artes',
+            email: 'luciana.martins@escola.com',
+            formacao: 'Licenciatura em Artes Visuais',
+            descricao: 'Professora com experiência em arte-educação e história da arte.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 8,
+            nome: 'Marcos Antônio',
+            disciplina: 'Matemática',
+            email: 'marcos.antonio@escola.com',
+            formacao: 'Licenciatura em Matemática',
+            descricao: 'Professor especializado em geometria e álgebra.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 9,
+            nome: 'Francisca Maria',
+            disciplina: 'Ciências',
+            email: 'francisca.maria@escola.com',
+            formacao: 'Licenciatura em Ciências',
+            descricao: 'Professora com experiência em ciências naturais e laboratório.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 10,
+            nome: 'José Carlos',
+            disciplina: 'Geografia',
+            email: 'jose.carlos@escola.com',
+            formacao: 'Licenciatura em Geografia',
+            descricao: 'Professor especializado em geografia humana e cartografia.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 11,
+            nome: 'Maria Helena',
+            disciplina: 'História',
+            email: 'maria.helena@escola.com',
+            formacao: 'Licenciatura em História',
+            descricao: 'Professora com experiência em história do Brasil e mundial.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 12,
+            nome: 'Pedro Paulo',
+            disciplina: 'Física',
+            email: 'pedro.paulo@escola.com',
+            formacao: 'Licenciatura em Física',
+            descricao: 'Professor especializado em física experimental.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 13,
+            nome: 'Ana Beatriz',
+            disciplina: 'Química',
+            email: 'ana.beatriz@escola.com',
+            formacao: 'Licenciatura em Química',
+            descricao: 'Professora com experiência em química orgânica.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 14,
+            nome: 'João Victor',
+            disciplina: 'Biologia',
+            email: 'joao.victor@escola.com',
+            formacao: 'Licenciatura em Biologia',
+            descricao: 'Professor especializado em ecologia e meio ambiente.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 15,
+            nome: 'Carla Regina',
+            disciplina: 'Sociologia',
+            email: 'carla.regina@escola.com',
+            formacao: 'Licenciatura em Sociologia',
+            descricao: 'Professora com experiência em teoria social.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 16,
+            nome: 'Roberto Silva',
+            disciplina: 'Filosofia',
+            email: 'roberto.silva@escola.com',
+            formacao: 'Licenciatura em Filosofia',
+            descricao: 'Professor especializado em filosofia contemporânea.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 17,
+            nome: 'Patrícia Santos',
+            disciplina: 'Inglês',
+            email: 'patricia.santos@escola.com',
+            formacao: 'Licenciatura em Letras - Inglês',
+            descricao: 'Professora com experiência em ensino de idiomas.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 18,
+            nome: 'Ricardo Souza',
+            disciplina: 'Educação Física',
+            email: 'ricardo.souza@escola.com',
+            formacao: 'Licenciatura em Educação Física',
+            descricao: 'Professor especializado em esportes coletivos.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 19,
+            nome: 'Fernanda Costa',
+            disciplina: 'Artes',
+            email: 'fernanda.costa@escola.com',
+            formacao: 'Licenciatura em Artes',
+            descricao: 'Professora com experiência em artes plásticas.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 20,
+            nome: 'Lucas Oliveira',
+            disciplina: 'Música',
+            email: 'lucas.oliveira@escola.com',
+            formacao: 'Licenciatura em Música',
+            descricao: 'Professor especializado em teoria musical e instrumentos.',
+            foto: defaultProfileImage
+          },
+          {
+            id: 21,
+            nome: 'Amanda Lima',
+            disciplina: 'Português',
+            email: 'amanda.lima@escola.com',
+            formacao: 'Licenciatura em Letras',
+            descricao: 'Professora com experiência em literatura e produção textual.',
+            foto: defaultProfileImage
+          }
+        ];
         
-        processedData = processedData.map(professor => ({
-          ...professor,
-          displayImage: professor.foto || defaultProfileImage
-        }));
-        
-        setFaculty(processedData);
+        setFaculty(staticFaculty);
         setError(null);
       } catch (err) {
         setError('Não foi possível carregar os dados dos professores. Por favor, tente novamente mais tarde.');
@@ -62,6 +242,7 @@ const Faculty = () => {
 
     loadFaculty();
   }, []);
+;
 
   const handleOpenDialog = (professor) => {
     setSelectedProfessor(professor);
@@ -118,7 +299,7 @@ const Faculty = () => {
               <CardMedia
                 component="img"
                 height="300"
-                image={professor.displayImage}
+                image={professor.foto}
                 alt={professor.nome}
                 sx={{ 
                   objectFit: 'cover',
