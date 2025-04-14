@@ -1,11 +1,14 @@
 {
   "files": {
-    "main.js": "/static/js/main.67840b6f.js",
-    "static/media/APL.png": "/static/media/APL.8378b60b4a9cb878d396.png",
-    "index.html": "/index.html",
-    "main.67840b6f.js.map": "/static/js/main.67840b6f.js.map"
+    "main.js": "/escola-website/static/js/main.d2d52b7d.js",
+    "static/media/APL.png": "/escola-website/static/media/APL.8378b60b4a9cb878d396.png",
+    "static/media/rangel.jpeg": "/escola-website/static/media/rangel.0bb02fb9eac8bbcc2d3b.jpeg",
+    "static/media/luan.jpeg": "/escola-website/static/media/luan.521043da37a2d870eff0.jpeg",
+    "static/media/junina.jpg": "/escola-website/static/media/junina.56323b0ed1c8468be0ac.jpg",
+    "index.html": "/escola-website/index.html",
+    "main.d2d52b7d.js.map": "/escola-website/static/js/main.d2d52b7d.js.map"
   },
   "entrypoints": [
-    "static/js/main.67840b6f.js"
+    "static/js/main.d2d52b7d.js"
   ]
 }
