@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.js": "/site-Ecit-Apl/static/js/main.cdcab632.js",
+    "static/media/dayana.jpg": "/site-Ecit-Apl/static/media/dayana.58781bfd6a2a518bbad7.jpg",
+    "static/media/APL.png": "/site-Ecit-Apl/static/media/APL.8378b60b4a9cb878d396.png",
+    "static/media/rosangela.png": "/site-Ecit-Apl/static/media/rosangela.d9994e16c01d22788929.png",
+    "static/media/rangel.jpeg": "/site-Ecit-Apl/static/media/rangel.0bb02fb9eac8bbcc2d3b.jpeg",
+    "static/media/luan.jpeg": "/site-Ecit-Apl/static/media/luan.521043da37a2d870eff0.jpeg",
+    "static/media/junina.jpg": "/site-Ecit-Apl/static/media/junina.56323b0ed1c8468be0ac.jpg",
+    "index.html": "/site-Ecit-Apl/index.html",
+    "main.cdcab632.js.map": "/site-Ecit-Apl/static/js/main.cdcab632.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.cdcab632.js"
+  ]
+}
